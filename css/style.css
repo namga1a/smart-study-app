@@ -19,3 +19,25 @@ nav a {
 main {
   padding: 20px;
 }
+
+form {
+  margin-bottom: 20px;
+}
+
+#task-input {
+  padding: 8px;
+  width: 200px;
+}
+
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  margin: 5px 0;
+  background: #f2f2f2;
+}
