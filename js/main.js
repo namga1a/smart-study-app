@@ -2,7 +2,6 @@ const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
 
-// load from localStorage
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
 function renderTasks() {
@@ -13,8 +12,14 @@ function renderTasks() {
 
     li.innerHTML = `
       <span>${task}</span>
-      <button onclick="deleteTask(${index})">Delete</button>
+      <button class="delete-btn">Delete</button>
     `;
+
+    const deleteBtn = li.querySelector(".delete-btn");
+
+    deleteBtn.addEventListener("click", () => {
+      deleteTask(index);
+    });
 
     list.appendChild(li);
   });
@@ -41,5 +46,4 @@ function deleteTask(index) {
 
 form.addEventListener("submit", addTask);
 
-// initial render
 renderTasks();
