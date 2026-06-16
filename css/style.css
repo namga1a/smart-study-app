@@ -41,3 +41,9 @@ li {
   margin: 5px 0;
   background: #f2f2f2;
 }
+
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}

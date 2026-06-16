@@ -11,11 +11,20 @@ function renderTasks() {
     const li = document.createElement("li");
 
     li.innerHTML = `
-      <span>${task}</span>
+      <span class="${task.completed ? "completed" : ""}">
+        ${task.text}
+      </span>
+      <button class="complete-btn">Complete</button>
       <button class="delete-btn">Delete</button>
     `;
 
     const deleteBtn = li.querySelector(".delete-btn");
+
+    const completeBtn = li.querySelector(".complete-btn");
+
+    completeBtn.addEventListener("click", () => {
+      toggleTask(index);
+    });
 
     deleteBtn.addEventListener("click", () => {
       deleteTask(index);
@@ -31,7 +40,10 @@ function addTask(e) {
   const value = input.value.trim();
   if (!value) return;
 
-  tasks.push(value);
+  tasks.push({
+    text: value,
+    completed: false,
+  });
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
   input.value = "";
@@ -41,6 +53,14 @@ function addTask(e) {
 function deleteTask(index) {
   tasks.splice(index, 1);
   localStorage.setItem("tasks", JSON.stringify(tasks));
+  renderTasks();
+}
+
+function toggleTask(index) {
+  tasks[index].completed = !tasks[index].completed;
+
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+
   renderTasks();
 }
 
