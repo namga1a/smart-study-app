@@ -1,15 +1,12 @@
 import { searchWikipedia } from "./api.js";
 
+/* ---------------- TASK SYSTEM ---------------- */
+
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-const searchForm = document.getElementById("search-form");
-const searchInput = document.getElementById("search-input");
-const results = document.getElementById("results");
-const loading = document.getElementById("loading");
 
 function renderTasks() {
   list.innerHTML = "";
@@ -25,15 +22,11 @@ function renderTasks() {
       <button class="delete-btn">Delete</button>
     `;
 
-    const deleteBtn = li.querySelector(".delete-btn");
-
-    const completeBtn = li.querySelector(".complete-btn");
-
-    completeBtn.addEventListener("click", () => {
+    li.querySelector(".complete-btn").addEventListener("click", () => {
       toggleTask(index);
     });
 
-    deleteBtn.addEventListener("click", () => {
+    li.querySelector(".delete-btn").addEventListener("click", () => {
       deleteTask(index);
     });
 
@@ -51,59 +44,96 @@ function addTask(e) {
     text: value,
     completed: false,
   });
-  localStorage.setItem("tasks", JSON.stringify(tasks));
 
+  saveTasks();
   input.value = "";
   renderTasks();
 }
 
 function deleteTask(index) {
   tasks.splice(index, 1);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  saveTasks();
   renderTasks();
 }
 
 function toggleTask(index) {
   tasks[index].completed = !tasks[index].completed;
-
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-
+  saveTasks();
   renderTasks();
 }
 
-async function handleSearch(e) {
-  e.preventDefault();
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
+/* ---------------- SEARCH SYSTEM ---------------- */
+
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+const results = document.getElementById("results");
+const loading = document.getElementById("loading");
+
+function searchQuery() {
   const query = searchInput.value.trim();
   if (!query) return;
 
-  loading.textContent = "Loading...";
+  loading.innerHTML = `<div class="spinner"></div>`;
   results.innerHTML = "";
 
-  try {
-    const data = await searchWikipedia(query);
+  searchWikipedia(query)
+    .then((data) => {
+      const article = document.createElement("article");
 
-    const article = document.createElement("article");
+      article.innerHTML = `
+        <h3>${data.title}</h3>
+        <p>${data.extract}</p>
+      `;
 
-    article.innerHTML = `
-      <h3>${data.title}</h3>
-      <p>${data.extract}</p>
-    `;
-
-    results.appendChild(article);
-
-  } catch (error) {
-    results.innerHTML = "<p>Topic not found.</p>";
-  }
-
-  loading.textContent = "";
+      results.appendChild(article);
+    })
+    .catch(() => {
+      results.innerHTML = `
+        <div class="error">
+          ❌ No results found. Try another topic.
+        </div>
+      `;
+    })
+    .finally(() => {
+      loading.innerHTML = "";
+    });
 }
+
+/* ---------------- DEBOUNCE ---------------- */
+
+function debounce(func, delay) {
+  let timeout;
+
+  return function (...args) {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+/* ---------------- EVENT HANDLERS ---------------- */
 
 if (form && input && list) {
   form.addEventListener("submit", addTask);
   renderTasks();
 }
 
-if (searchForm) {
-  searchForm.addEventListener("submit", handleSearch);
+if (searchForm && searchInput) {
+  function handleSubmit(e) {
+    e.preventDefault();
+    searchQuery();
+  }
+
+  const handleInput = debounce(() => {
+    searchQuery();
+  }, 500);
+
+  searchForm.addEventListener("submit", handleSubmit);
+  searchInput.addEventListener("input", handleInput);
 }
