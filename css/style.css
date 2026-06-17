@@ -1,25 +1,27 @@
 :root {
-  --primary-color: #222;
-  --secondary-color: #f2f2f2;
+  --primary-color: #1f2937;
+  --secondary-color: #f4f4f4;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
   --spacing: 20px;
 }
+
+/* ---------------- BASE ---------------- */
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background: #f6f7fb;
+  color: #222;
 }
+
+/* ---------------- HEADER ---------------- */
 
 header {
   background: var(--primary-color);
   color: white;
-  padding: 15px;
-}
-
-nav a {
-  color: white;
-  margin-right: 10px;
-  text-decoration: none;
+  padding: 15px 20px;
 }
 
 nav {
@@ -28,37 +30,132 @@ nav {
   align-items: center;
 }
 
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 6px;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------------- LAYOUT ---------------- */
+
 main {
+  max-width: 800px;
+  margin: auto;
   padding: var(--spacing);
 }
 
+/* ---------------- FORMS ---------------- */
+
 form {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   margin-bottom: 20px;
+  margin: 10px;
 }
 
-#task-input {
-  padding: 8px;
-  width: 200px;
+input,
+textarea {
+  width: 90%;
+  padding: 10px;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
 }
+
+/* ---------------- BUTTONS ---------------- */
 
 button {
-  padding: 8px 12px;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
   cursor: pointer;
+  margin-left: 5px;
+  transition: 0.2s;
 }
 
-li {
+button:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.delete-btn,
+.delete-note {
+  background: var(--accent-red);
+  color: white;
+}
+
+.complete-btn {
+  background: var(--accent-green);
+  color: white;
+}
+
+/* ---------------- LIST ITEMS ---------------- */
+
+li,
+#notes-list div {
+  background: white;
+  padding: 12px;
+  margin: 10px 0;
+  width: 90%;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
-  padding: 8px;
-  margin: 5px 0;
-  background: var(--secondary-color);
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.2s;
 }
 
+li:hover,
+#notes-list div:hover,
+#results article:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------------- TEXT ---------------- */
+
+li span {
+  flex: 1;
+}
 
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
 }
+
+h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+p {
+  line-height: 1.4;
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}
+
+/* ---------------- SEARCH RESULTS ---------------- */
+
+#results article {
+  background: white;
+  padding: 15px;
+  margin-top: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* ---------------- LOADING ---------------- */
 
 .spinner {
   border: 4px solid #f3f3f3;
@@ -75,15 +172,23 @@ li {
   100% { transform: rotate(360deg); }
 }
 
+/* ---------------- ERROR ---------------- */
+
 .error {
-  color: red;
+  color: var(--accent-red);
   font-weight: bold;
 }
+
+/* ---------------- RESPONSIVE ---------------- */
 
 @media (max-width: 600px) {
   nav {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  main {
+    padding: 10px;
   }
 
   #task-input {
@@ -93,5 +198,6 @@ li {
   li {
     flex-direction: column;
     gap: 10px;
+    align-items: flex-start;
   }
 }
