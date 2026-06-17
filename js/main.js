@@ -1,8 +1,15 @@
+import { searchWikipedia } from "./api.js";
+
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+const results = document.getElementById("results");
+const loading = document.getElementById("loading");
 
 function renderTasks() {
   list.innerHTML = "";
@@ -64,6 +71,39 @@ function toggleTask(index) {
   renderTasks();
 }
 
-form.addEventListener("submit", addTask);
+async function handleSearch(e) {
+  e.preventDefault();
 
-renderTasks();
+  const query = searchInput.value.trim();
+  if (!query) return;
+
+  loading.textContent = "Loading...";
+  results.innerHTML = "";
+
+  try {
+    const data = await searchWikipedia(query);
+
+    const article = document.createElement("article");
+
+    article.innerHTML = `
+      <h3>${data.title}</h3>
+      <p>${data.extract}</p>
+    `;
+
+    results.appendChild(article);
+
+  } catch (error) {
+    results.innerHTML = "<p>Topic not found.</p>";
+  }
+
+  loading.textContent = "";
+}
+
+if (form && input && list) {
+  form.addEventListener("submit", addTask);
+  renderTasks();
+}
+
+if (searchForm) {
+  searchForm.addEventListener("submit", handleSearch);
+}
