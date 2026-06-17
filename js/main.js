@@ -112,7 +112,7 @@ function debounce(func, delay) {
     clearTimeout(timeout);
 
     timeout = setTimeout(() => {
-      func.apply(this, args);
+      func(...args);
     }, delay);
   };
 }
@@ -130,10 +130,65 @@ if (searchForm && searchInput) {
     searchQuery();
   }
 
-  const handleInput = debounce(() => {
-    searchQuery();
-  }, 500);
+  const handleInput = debounce(searchQuery, 500);
 
   searchForm.addEventListener("submit", handleSubmit);
   searchInput.addEventListener("input", handleInput);
+}
+
+
+
+
+const notesForm = document.getElementById("notes-form");
+const notesInput = document.getElementById("notes-input");
+const notesList = document.getElementById("notes-list");
+
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+function renderNotes() {
+  notesList.innerHTML = "";
+
+  notes.forEach((note, index) => {
+    const div = document.createElement("div");
+
+    const p = document.createElement("p");
+    p.textContent = note;
+
+    const btn = document.createElement("button");
+    btn.textContent = "Delete";
+    btn.classList.add("delete-note");
+
+    btn.addEventListener("click", () => {
+      deleteNote(index);
+    });
+
+    div.appendChild(p);
+    div.appendChild(btn);
+
+    notesList.appendChild(div);
+  });
+}
+
+function addNote(e) {
+  e.preventDefault();
+
+  const value = notesInput.value.trim();
+  if (!value) return;
+
+  notes.push(value);
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+  notesInput.value = "";
+  renderNotes();
+}
+
+function deleteNote(index) {
+  notes.splice(index, 1);
+  localStorage.setItem("notes", JSON.stringify(notes));
+  renderNotes();
+}
+
+if (notesForm && notesInput && notesList) {
+  notesForm.addEventListener("submit", addNote);
+  renderNotes();
 }

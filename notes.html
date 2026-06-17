@@ -18,9 +18,16 @@
 
 <main>
   <h2>Notes Page</h2>
-  <p>We will store notes using localStorage here.</p>
+
+  <form id="notes-form">
+    <textarea id="notes-input" placeholder="Write your note..."></textarea>
+    <button type="submit">Save Note</button>
+  </form>
+
+  <div id="notes-list"></div>
 </main>
 
 <script type="module" src="js/main.js"></script>
+
 </body>
 </html>
