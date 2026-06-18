@@ -16,8 +16,29 @@ function renderTasks() {
 
     const span = document.createElement("span");
     span.textContent = task.text;
+
     if (task.completed) {
       span.classList.add("completed");
+    }
+
+    const date = document.createElement("small");
+
+    if (task.dueDate) {
+      const due = new Date(task.dueDate);
+      const today = new Date();
+
+      const diffTime = due - today;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays < 0) {
+        date.textContent = `Due: ${task.dueDate} | ⚠ Overdue`;
+        date.style.color = "red";
+      } else if (diffDays === 0) {
+        date.textContent = `Due: ${task.dueDate} | ⚠ Today`;
+        date.style.color = "orange";
+      } else {
+        date.textContent = `Due: ${task.dueDate} | ${diffDays} days left`;
+      }
     }
 
     const completeBtn = document.createElement("button");
@@ -28,12 +49,6 @@ function renderTasks() {
     deleteBtn.textContent = "Delete";
     deleteBtn.classList.add("delete-btn");
 
-    const btnContainer = document.createElement("div");
-    btnContainer.classList.add("btn-container");
-
-    btnContainer.appendChild(completeBtn);
-    btnContainer.appendChild(deleteBtn);
-
     completeBtn.addEventListener("click", () => {
       toggleTask(index);
     });
@@ -42,12 +57,20 @@ function renderTasks() {
       deleteTask(index);
     });
 
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("btn-container");
+
+    btnContainer.appendChild(completeBtn);
+    btnContainer.appendChild(deleteBtn);
+
     li.appendChild(span);
+    li.appendChild(date);
     li.appendChild(btnContainer);
 
     list.appendChild(li);
   });
 }
+
 function addTask(e) {
   e.preventDefault();
 
@@ -57,10 +80,12 @@ function addTask(e) {
   tasks.push({
     text: value,
     completed: false,
+    dueDate: dateInput.value || null,
   });
 
   saveTasks();
   input.value = "";
+  dateInput.value = "";
   renderTasks();
 }
 
