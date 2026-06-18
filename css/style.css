@@ -3,6 +3,7 @@
   --secondary-color: #f4f4f4;
   --accent-green: #22c55e;
   --accent-red: #ef4444;
+  --accent-blue: #3b82f6;
   --spacing: 20px;
 }
 
@@ -22,9 +23,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), #111827);
   color: white;
   padding: 15px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .logo-container {
@@ -34,13 +36,13 @@ body {
 }
 
 .logo {
-  height: 80px;
-  object-fit: cover;
+  height: 60px;
+  border-radius: 10px;
 }
 
 nav {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   align-items: center;
 }
 
@@ -48,18 +50,20 @@ nav a {
   color: white;
   text-decoration: none;
   font-weight: 500;
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: 0.2s;
 }
 
 nav a:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
 }
 
 /* ---------------- LAYOUT ---------------- */
 
 main {
-  max-width: 800px;
+  max-width: 850px;
   margin: auto;
   padding: var(--spacing);
 }
@@ -69,36 +73,42 @@ main {
 form {
   background: white;
   padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
-  margin: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  margin: 15px 0;
 }
 
 input,
 textarea {
-  width: 90%;
+  width: 100%;
   padding: 10px;
   margin-top: 8px;
   border: 1px solid #ddd;
   border-radius: 8px;
   outline: none;
+  transition: 0.2s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
 }
 
 /* ---------------- BUTTONS ---------------- */
 
 button {
   border: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-left: 5px;
   transition: 0.2s;
+  font-weight: 500;
 }
 
 button:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
 .delete-btn,
@@ -112,83 +122,31 @@ button:hover {
   color: white;
 }
 
-/* ---------------- LIST ITEMS ---------------- */
+/* ---------------- TASK ITEMS ---------------- */
 
 li {
   background: white;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  transition: 0.2s;
+}
+
+li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
 li small {
-  display: block;
-  margin-top: 5px;
   font-size: 12px;
   opacity: 0.8;
 }
 
-#notes-list div {
-  background: white;
-  padding: 16px;
-  margin: 10px 0;
-  border-radius: 10px;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 12px;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-#notes-list h3 {
-  margin: 0;
-
-  text-align: center;
-
-  color: var(--primary-color);
-}
-
-#notes-list p {
-  margin: 0;
-
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-.delete-note {
-  align-self: center;
-}
-
-.note-content {
-  text-align: left;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-
-li:hover,
-#notes-list div:hover,
-#results article:hover {
-  transform: translateY(-2px);
-}
-
-/* ---------------- TEXT ---------------- */
-
-li span {
-  font-weight: bold;
-  font-size: 16px;
-}
-
-li button {
-  width: auto;
-  flex: 1;
-}
+/* ---------------- BUTTON GROUP ---------------- */
 
 .btn-container {
   display: flex;
@@ -199,45 +157,65 @@ li button {
   flex: 1;
 }
 
+/* ---------------- COMPLETED TASK ---------------- */
+
 .completed {
   text-decoration: line-through;
-  opacity: 0.6;
+  opacity: 0.5;
 }
+
+/* ---------------- NOTES ---------------- */
+
+#notes-list div {
+  background: white;
+  padding: 16px;
+  margin: 12px 0;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  transition: 0.2s;
+}
+
+#notes-list div:hover {
+  transform: translateY(-3px);
+}
+
+/* ---------------- TEXT ---------------- */
 
 h2 {
-  margin-bottom: 10px;
   text-align: center;
-}
-
-p {
-  line-height: 1.4;
-  text-align: center;
+  margin-bottom: 15px;
 }
 
 h3 {
   text-align: center;
+  color: var(--primary-color);
 }
 
-/* ---------------- SEARCH RESULTS ---------------- */
+p {
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ---------------- SEARCH ---------------- */
 
 #results article {
   background: white;
   padding: 15px;
   margin-top: 10px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
 }
 
 /* ---------------- LOADING ---------------- */
 
 .spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #333;
+  border: 4px solid #eee;
+  border-top: 4px solid var(--primary-color);
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   animation: spin 1s linear infinite;
-  margin: 10px 0;
+  margin: 10px auto;
 }
 
 @keyframes spin {
@@ -250,6 +228,7 @@ h3 {
 .error {
   color: var(--accent-red);
   font-weight: bold;
+  text-align: center;
 }
 
 /* ---------------- RESPONSIVE ---------------- */
@@ -264,13 +243,12 @@ h3 {
     padding: 10px;
   }
 
-  #task-input {
+  input,
+  textarea {
     width: 100%;
   }
 
-  li {
+  .btn-container {
     flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
   }
 }

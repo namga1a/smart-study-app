@@ -5,6 +5,7 @@ import { searchWikipedia } from "./api.js";
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
+const dateInput = document.getElementById("task-date");
 
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
