@@ -14,26 +14,40 @@ function renderTasks() {
   tasks.forEach((task, index) => {
     const li = document.createElement("li");
 
-    li.innerHTML = `
-      <span class="${task.completed ? "completed" : ""}">
-        ${task.text}
-      </span>
-      <button class="complete-btn">Complete</button>
-      <button class="delete-btn">Delete</button>
-    `;
+    const span = document.createElement("span");
+    span.textContent = task.text;
+    if (task.completed) {
+      span.classList.add("completed");
+    }
 
-    li.querySelector(".complete-btn").addEventListener("click", () => {
+    const completeBtn = document.createElement("button");
+    completeBtn.textContent = "Complete";
+    completeBtn.classList.add("complete-btn");
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.classList.add("delete-btn");
+
+    const btnContainer = document.createElement("div");
+    btnContainer.classList.add("btn-container");
+
+    btnContainer.appendChild(completeBtn);
+    btnContainer.appendChild(deleteBtn);
+
+    completeBtn.addEventListener("click", () => {
       toggleTask(index);
     });
 
-    li.querySelector(".delete-btn").addEventListener("click", () => {
+    deleteBtn.addEventListener("click", () => {
       deleteTask(index);
     });
+
+    li.appendChild(span);
+    li.appendChild(btnContainer);
 
     list.appendChild(li);
   });
 }
-
 function addTask(e) {
   e.preventDefault();
 
