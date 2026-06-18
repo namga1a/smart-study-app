@@ -126,6 +126,13 @@ li {
   gap: 10px;
 }
 
+li small {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
 #notes-list div {
   background: white;
   padding: 16px;
