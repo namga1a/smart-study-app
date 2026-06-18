@@ -1,13 +1,32 @@
 import { searchWikipedia } from "./api.js";
 
-/* ---------------- TASK SYSTEM ---------------- */
+/* ---------------- ELEMENTS ---------------- */
 
 const form = document.getElementById("task-form");
 const input = document.getElementById("task-input");
 const list = document.getElementById("task-list");
 const dateInput = document.getElementById("task-date");
 
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+const results = document.getElementById("results");
+const loading = document.getElementById("loading");
+
+const notesForm = document.getElementById("notes-form");
+const notesInput = document.getElementById("notes-input");
+const noteTitle = document.getElementById("note-title");
+const notesList = document.getElementById("notes-list");
+
+/* ---------------- DATA ---------------- */
+
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+/* ---------------- TASK SYSTEM ---------------- */
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function renderTasks() {
   list.innerHTML = "";
@@ -28,8 +47,7 @@ function renderTasks() {
       const due = new Date(task.dueDate);
       const today = new Date();
 
-      const diffTime = due - today;
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const diffDays = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
 
       if (diffDays < 0) {
         date.textContent = `Due: ${task.dueDate} | ⚠ Overdue`;
@@ -50,13 +68,8 @@ function renderTasks() {
     deleteBtn.textContent = "Delete";
     deleteBtn.classList.add("delete-btn");
 
-    completeBtn.addEventListener("click", () => {
-      toggleTask(index);
-    });
-
-    deleteBtn.addEventListener("click", () => {
-      deleteTask(index);
-    });
+    completeBtn.onclick = () => toggleTask(index);
+    deleteBtn.onclick = () => deleteTask(index);
 
     const btnContainer = document.createElement("div");
     btnContainer.classList.add("btn-container");
@@ -90,28 +103,19 @@ function addTask(e) {
   renderTasks();
 }
 
-function deleteTask(index) {
-  tasks.splice(index, 1);
-  saveTasks();
-  renderTasks();
-}
-
 function toggleTask(index) {
   tasks[index].completed = !tasks[index].completed;
   saveTasks();
   renderTasks();
 }
 
-function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+function deleteTask(index) {
+  tasks.splice(index, 1);
+  saveTasks();
+  renderTasks();
 }
 
 /* ---------------- SEARCH SYSTEM ---------------- */
-
-const searchForm = document.getElementById("search-form");
-const searchInput = document.getElementById("search-input");
-const results = document.getElementById("results");
-const loading = document.getElementById("loading");
 
 function searchQuery() {
   const query = searchInput.value.trim();
@@ -122,20 +126,16 @@ function searchQuery() {
 
   searchWikipedia(query)
     .then((data) => {
-      const article = document.createElement("article");
-
-      article.innerHTML = `
-        <h3>${data.title}</h3>
-        <p>${data.extract}</p>
+      results.innerHTML = `
+        <article>
+          <h3>${data.title}</h3>
+          <p>${data.extract}</p>
+        </article>
       `;
-
-      results.appendChild(article);
     })
     .catch(() => {
       results.innerHTML = `
-        <div class="error">
-          ❌ No results found. Try another topic.
-        </div>
+        <div class="error">❌ No results found</div>
       `;
     })
     .finally(() => {
@@ -143,45 +143,16 @@ function searchQuery() {
     });
 }
 
-/* ---------------- DEBOUNCE ---------------- */
-
 function debounce(func, delay) {
   let timeout;
 
   return function (...args) {
     clearTimeout(timeout);
-
-    timeout = setTimeout(() => {
-      func(...args);
-    }, delay);
+    timeout = setTimeout(() => func(...args), delay);
   };
 }
 
-/* ---------------- EVENT HANDLERS ---------------- */
-
-if (form && input && list) {
-  form.addEventListener("submit", addTask);
-  renderTasks();
-}
-
-if (searchForm && searchInput) {
-  function handleSubmit(e) {
-    e.preventDefault();
-    searchQuery();
-  }
-
-  const handleInput = debounce(searchQuery, 500);
-
-  searchForm.addEventListener("submit", handleSubmit);
-  searchInput.addEventListener("input", handleInput);
-}
-
-const notesForm = document.getElementById("notes-form");
-const notesInput = document.getElementById("notes-input");
-const noteTitle = document.getElementById("note-title");
-const notesList = document.getElementById("notes-list");
-
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
+/* ---------------- NOTES SYSTEM ---------------- */
 
 function renderNotes() {
   notesList.innerHTML = "";
@@ -189,24 +160,13 @@ function renderNotes() {
   notes.forEach((note, index) => {
     const div = document.createElement("div");
 
-    const title = document.createElement("h3");
-    title.textContent = note.title;
+    div.innerHTML = `
+      <h3>${note.title}</h3>
+      <p class="note-content">${note.content}</p>
+      <button class="delete-note">Delete</button>
+    `;
 
-    const p = document.createElement("p");
-    p.classList.add("note-content");
-    p.textContent = note.content;
-
-    const btn = document.createElement("button");
-    btn.textContent = "Delete";
-    btn.classList.add("delete-note");
-
-    btn.addEventListener("click", () => {
-      deleteNote(index);
-    });
-
-    div.appendChild(title);
-    div.appendChild(p);
-    div.appendChild(btn);
+    div.querySelector("button").onclick = () => deleteNote(index);
 
     notesList.appendChild(div);
   });
@@ -220,10 +180,8 @@ function addNote(e) {
 
   if (!title || !content) return;
 
-  notes.push({
-    title,
-    content,
-  });
+  notes.push({ title, content });
+
   localStorage.setItem("notes", JSON.stringify(notes));
 
   noteTitle.value = "";
@@ -237,7 +195,23 @@ function deleteNote(index) {
   renderNotes();
 }
 
-if (notesForm && notesInput && notesList) {
+/* ---------------- EVENTS ---------------- */
+
+if (form) {
+  form.addEventListener("submit", addTask);
+  renderTasks();
+}
+
+if (searchForm) {
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    searchQuery();
+  });
+
+  searchInput.addEventListener("input", debounce(searchQuery, 500));
+}
+
+if (notesForm) {
   notesForm.addEventListener("submit", addNote);
   renderNotes();
 }
