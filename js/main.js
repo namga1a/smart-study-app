@@ -136,11 +136,9 @@ if (searchForm && searchInput) {
   searchInput.addEventListener("input", handleInput);
 }
 
-
-
-
 const notesForm = document.getElementById("notes-form");
 const notesInput = document.getElementById("notes-input");
+const noteTitle = document.getElementById("note-title");
 const notesList = document.getElementById("notes-list");
 
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -151,8 +149,12 @@ function renderNotes() {
   notes.forEach((note, index) => {
     const div = document.createElement("div");
 
+    const title = document.createElement("h3");
+    title.textContent = note.title;
+
     const p = document.createElement("p");
-    p.textContent = note;
+    p.classList.add("note-content");
+    p.textContent = note.content;
 
     const btn = document.createElement("button");
     btn.textContent = "Delete";
@@ -162,6 +164,7 @@ function renderNotes() {
       deleteNote(index);
     });
 
+    div.appendChild(title);
     div.appendChild(p);
     div.appendChild(btn);
 
@@ -172,12 +175,18 @@ function renderNotes() {
 function addNote(e) {
   e.preventDefault();
 
-  const value = notesInput.value.trim();
-  if (!value) return;
+  const title = noteTitle.value.trim();
+  const content = notesInput.value.trim();
 
-  notes.push(value);
+  if (!title || !content) return;
+
+  notes.push({
+    title,
+    content,
+  });
   localStorage.setItem("notes", JSON.stringify(notes));
 
+  noteTitle.value = "";
   notesInput.value = "";
   renderNotes();
 }

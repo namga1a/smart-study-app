@@ -103,15 +103,41 @@ button:hover {
 li,
 #notes-list div {
   background: white;
-  padding: 12px;
+  padding: 16px;
   margin: 10px 0;
-  width: 90%;
   border-radius: 10px;
+
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: 0.2s;
+  flex-direction: column;
+
+  gap: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#notes-list h3 {
+  margin: 0;
+
+  text-align: center;
+
+  color: var(--primary-color);
+}
+
+#notes-list p {
+  margin: 0;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.delete-note {
+  align-self: center;
+}
+
+.note-content {
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 li:hover,
