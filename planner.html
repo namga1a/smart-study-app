@@ -1,42 +1,45 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planner</title>
-  <link rel="icon" type="image/png" href="/assets/logo_square.jpg">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planner</title>
+    <link rel="icon" type="image/png" href="/assets/logo_square.jpg" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <img src="/assets/logo_square.jpg" alt="Logo" class="logo" />
+        <h1>Smart Study App</h1>
+      </div>
 
-<header>
-  <header class="header">
-  <div class="logo-container">
-    <img src="/assets/logo_square.jpg" alt="Logo" class="logo">
-    <h1>Smart Study App</h1>
-  </div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="planner.html">Planner</a>
+        <a href="notes.html">Notes</a>
+      </nav>
+    </header>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="planner.html">Planner</a>
-    <a href="notes.html">Notes</a>
-  </nav>
-</header>
+    <main>
+      <h2>Study Planner</h2>
 
-<main>
-  <h2>Study Planner</h2>
+      <form id="task-form">
+        <input
+          type="text"
+          id="task-input"
+          placeholder="Enter task..."
+          required
+        />
 
-  <form id="task-form">
-  <input type="text" id="task-input" placeholder="Enter task..." required>
+        <input type="date" id="task-date" required />
 
-  <input type="date" id="task-date" required>
+        <button type="submit">Add Task</button>
+      </form>
 
-  <button type="submit">Add Task</button>
-</form>
+      <ul id="task-list"></ul>
+    </main>
 
-  <ul id="task-list"></ul>
-</main>
-
-<script type="module" src="js/main.js"></script>
-</body>
+    <script type="module" src="js/main.js"></script>
+  </body>
 </html>
