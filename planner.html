@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Planner</title>
+    <script src="/js/theme.js" defer></script>
+    <script type="module" src="/js/main.js" defer></script>
     <link rel="icon" type="image/png" href="/assets/logo_square.jpg" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -15,9 +17,19 @@
       </div>
 
       <nav>
+        <button
+          class="theme-switch"
+          id="theme-toggle"
+          aria-label="Toggle Theme"
+        >
+          <span class="icon">🌙</span>
+        </button>
         <a href="index.html">Home</a>
-        <a href="planner.html">Planner</a>
+        <a href="planner.html" style="color: var(--primary); font-weight: 700"
+          >Planner</a
+        >
         <a href="notes.html">Notes</a>
+        <a href="subjects.html">Subjects</a>
       </nav>
     </header>
 
@@ -40,6 +52,5 @@
       <ul id="task-list"></ul>
     </main>
 
-    <script type="module" src="js/main.js"></script>
   </body>
 </html>
