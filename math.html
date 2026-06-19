@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Workspace</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="/assets/logo_square.jpg" />
+    <script src="/js/theme.js" defer></script>
+    <script type="module" src="/js/main.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <img src="/assets/logo_square.jpg" alt="Logo" class="logo" />
+        <h1>Math Workspace 📐</h1>
+      </div>
+      <nav>
+        <a href="subjects.html">← Back to Hub</a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="split-workspace">
+        <div class="pane left-pane">
+          <h2>Quick Solvers</h2>
+          <div class="formula-box">
+            <h3>Pythagorean Theorem ($a^2 + b^2 = c^2$)</h3>
+            <div class="formula-inputs">
+              <input type="number" id="py-a" placeholder="Side a" />
+              <input type="number" id="py-b" placeholder="Side b" />
+            </div>
+            <button id="solve-py">Calculate Hypotenuse (c)</button>
+            <p id="py-result" class="math-output">Result: --</p>
+          </div>
+        </div>
+
+        <div class="pane right-pane">
+          <h2>Scratchpad Calculator</h2>
+          <div class="calc-container">
+            <input type="text" id="calc-display" readonly placeholder="0" />
+            <div class="calc-grid">
+              <button class="calc-btn clear">C</button>
+              <button class="calc-btn op">/</button>
+              <button class="calc-btn op">*</button>
+              <button class="calc-btn op">-</button>
+
+              <button class="calc-btn">7</button>
+              <button class="calc-btn">8</button>
+              <button class="calc-btn">9</button>
+              <button class="calc-btn op">+</button>
+
+              <button class="calc-btn">4</button>
+              <button class="calc-btn">5</button>
+              <button class="calc-btn">6</button>
+              <button class="calc-btn equals">=</button>
+
+              <button class="calc-btn">1</button>
+              <button class="calc-btn">2</button>
+              <button class="calc-btn">3</button>
+              <button class="calc-btn zero">0</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </body>
+</html>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Study App</title>
+    <script src="/js/theme.js" defer></script>
+    <script type="module" src="/js/main.js" defer></script>
     <link rel="icon" type="image/png" href="/assets/logo_square.jpg" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -15,38 +17,44 @@
       </div>
 
       <nav>
-        <a href="index.html">Home</a>
+        <button
+          class="theme-switch"
+          id="theme-toggle"
+          aria-label="Toggle Theme"
+        >
+          <span class="icon">🌙</span>
+        </button>
+        <a href="index.html" style="color: var(--primary); font-weight: 700">Home</a>
         <a href="planner.html">Planner</a>
         <a href="notes.html">Notes</a>
+        <a href="subjects.html">Subjects</a>
       </nav>
     </header>
 
     <main>
-      <section>
+      <section class="welcome-hero">
         <h2>Welcome 👋</h2>
         <p>This app helps you study smarter using AI + planning tools.</p>
       </section>
+
+      <section class="search-section">
+        <h2>Search Study Topics</h2>
+
+        <form id="search-form">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search a topic..."
+            required
+          />
+          <button type="submit">Search</button>
+        </form>
+
+        <p id="loading"></p>
+
+        <div id="results"></div>
+      </section>
     </main>
 
-    <section>
-      <h2>Search Study Topics</h2>
-
-      <form id="search-form">
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search a topic..."
-          required
-        />
-
-        <button type="submit">Search</button>
-      </form>
-
-      <p id="loading"></p>
-
-      <div id="results"></div>
-    </section>
-
-    <script type="module" src="js/main.js"></script>
   </body>
 </html>

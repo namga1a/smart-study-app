@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Study Subjects</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="icon" type="image/png" href="/assets/logo_square.jpg" />
+    <script src="/js/theme.js" defer></script>
+    <script type="module" src="/js/main.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <img src="/assets/logo_square.jpg" alt="Logo" class="logo" />
+        <h1>Smart Study App</h1>
+      </div>
+      <nav>
+        <button
+          class="theme-switch"
+          id="theme-toggle"
+          aria-label="Toggle Theme"
+        >
+          <span class="icon">🌙</span>
+        </button>
+        <a href="index.html">Home</a>
+        <a href="planner.html">Planner</a>
+        <a href="notes.html">Notes</a>
+        <a href="subjects.html" class="active">Subjects</a>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Choose a Study Subject</h2>
+      <p style="margin-bottom: 32px">
+        Select a specialized workspace to begin your deep-work session.
+      </p>
+
+      <div class="subject-grid">
+        <a href="math.html" class="subject-card">
+          <div class="subject-icon">📐</div>
+          <h3>Mathematics</h3>
+          <p>Interactive formula solvers and built-in scratchpad calculator.</p>
+        </a>
+
+        <a href="programming.html" class="subject-card">
+          <div class="subject-icon">💻</div>
+          <h3>Programming</h3>
+          <p>Language cheat sheets, syntax breakdowns, and concept docs.</p>
+        </a>
+
+        <div class="subject-card disabled">
+          <div class="subject-icon">📜</div>
+          <h3>History</h3>
+          <p>Timeline engine and interactive flashcards coming soon.</p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

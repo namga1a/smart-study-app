@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subjects Workspace - Programming</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="/js/theme.js" defer></script>
+    <script type="module" src="/js/main.js" defer></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <img src="/assets/logo_square.jpg" alt="Logo" class="logo" />
+        <h1>Programming 💻</h1>
+      </div>
+      <nav>
+        <a href="subjects.html">← Back to Hub</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <header>
+        <h1>Subject Hub: Programming</h1>
+        <p>
+          Real-time developer documentation streaming directly from the Stack
+          Overflow ecosystem.
+        </p>
+      </header>
+
+      <div
+        class="workspace-layout"
+        style="display: flex; gap: 24px; margin-top: 24px"
+      >
+        <aside class="pane sidebar-pane" style="flex: 1; min-width: 200px">
+          <h2>Technologies</h2>
+          <div
+            class="lang-menu"
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              margin-top: 16px;
+            "
+          >
+            <button class="lang-tab active" data-tag="javascript">
+              JavaScript
+            </button>
+            <button class="lang-tab" data-tag="python">Python</button>
+            <button class="lang-tab" data-tag="html">HTML</button>
+            <button class="lang-tab" data-tag="css">CSS</button>
+            <button class="lang-tab" data-tag="c++">C++</button>
+            <button class="lang-tab" data-tag="java">Java</button>
+            <button class="lang-tab" data-tag="typescript">TypeScript</button>
+            <button class="lang-tab" data-tag="rust">Rust</button>
+            <button class="lang-tab" data-tag="go">Go (Golang)</button>
+            <button class="lang-tab" data-tag="sql">SQL Database</button>
+            <button class="lang-tab" data-tag="reactjs">React</button>
+            <button class="lang-tab" data-tag="node.js">Node.js</button>
+          </div>
+        </aside>
+
+        <section
+          class="pane content-pane"
+          style="
+            flex: 3;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: stretch;
+            position: relative;
+          "
+        >
+          <div id="doc-view">
+            <div class="spinner"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
